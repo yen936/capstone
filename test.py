@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import torch
 from torch import nn
+from sklearn import preprocessing
 from sklearn.model_selection import train_test_split, KFold
 # from sklearn.linear_model import LinearRegression
 
@@ -24,11 +25,13 @@ df = pd.read_csv(filepath)
 
 # extracts data, loads into pd.df, finally converts to numpy array
 
-foo = np.arange(df['Date'].size)
+# Normalizing
+price_norm = preprocessing.scale(df['Price'].values)
+date_norm = preprocessing.scale(np.arange(df['Date'].size))
 
 # Loads numpy array into tensor
-x_train = torch.tensor(np.arange(df['Date'].size))  # array of number of days
-y_train = torch.tensor(df['Price'].values)
+x_train = torch.tensor(date_norm)  # array of number of days
+y_train = torch.tensor(price_norm)
 
 # formatting and reshaping
 x_train, y_train = x_train.type(torch.FloatTensor), y_train.type(torch.FloatTensor)
@@ -47,7 +50,7 @@ class CustomLinearRegression(nn.Module):
 
 model = CustomLinearRegression()
 criterion = nn.MSELoss()
-optimizer = torch.optim.SGD(model.parameters(), lr=1e-4)
+optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
 
 
 num_epochs = 1000
