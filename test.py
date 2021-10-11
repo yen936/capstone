@@ -5,7 +5,6 @@ import torch
 from torch import nn
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split, KFold
-# from sklearn.linear_model import LinearRegression
 
 
 
@@ -38,9 +37,9 @@ x_train, y_train = x_train.type(torch.FloatTensor), y_train.type(torch.FloatTens
 x_train, y_train = x_train.reshape(-1, 1), y_train.reshape(-1, 1)
 
 
-class CustomLinearRegression(nn.Module):
+class LinearRegression(nn.Module):
     def __init__(self):
-        super(CustomLinearRegression, self).__init__()
+        super(LinearRegression, self).__init__()
         self.linear = nn.Linear(1, 1)  # 1 in feature and 1 out feature
 
     def forward(self, x):
@@ -48,7 +47,7 @@ class CustomLinearRegression(nn.Module):
         return out
 
 
-model = CustomLinearRegression()
+model = LinearRegression()
 criterion = nn.MSELoss()
 optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
 
