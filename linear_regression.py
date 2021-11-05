@@ -4,25 +4,12 @@ import numpy as np
 import torch
 from torch import nn
 from sklearn import preprocessing
-from sklearn.model_selection import train_test_split, KFold
-
 
 
 # Load data
 filepath = 'oilprices.csv'
 df = pd.read_csv(filepath)
 
-# Visualize data
-# plt.figure(figsize=(12, 8))  # Size of window
-# plt.plot(df['Price'])  # Data entry
-# plt.xticks(range(0, df.shape[0], 5000), df['Date'].loc[::5000], rotation=45)  # tick marks
-# plt.title("Oil Price", fontsize=18, fontweight='bold')
-# plt.xlabel('Date', fontsize=18)
-# plt.ylabel('Price (USD)', fontsize=18)
-# plt.show()
-
-
-# extracts data, loads into pd.df, finally converts to numpy array
 
 # Normalizing
 price_norm = preprocessing.scale(df['Price'].values)
@@ -78,4 +65,5 @@ fig = plt.figure(figsize=(10, 5))
 plt.plot(x_train.numpy(), y_train.numpy(), 'ro', label='Oil Prices')
 plt.plot(x_train.numpy(), predict, label='Fitting Line')
 plt.legend()
+plt.title(label="Linear Regression of Oil Prices")
 plt.show()
